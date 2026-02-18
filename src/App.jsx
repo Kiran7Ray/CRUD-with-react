@@ -1,15 +1,34 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Form from "./components/Form";
 import Items from "./components/Items";
 import { groceryItems } from "./data/groceryItems";
 import "./App.css";
 
-const App = () => {
-  const [items, setItems] = useState(groceryItems);
+const getLocalData = () => {
+  const stored = localStorage.getItem("groceries");
 
-  // edit states
+  if (stored) {
+    return JSON.parse(stored);
+  }
+
+  return groceryItems; // default first time
+};
+
+const App = () => {
+  // ✅ load from localStorage
+  const [items, setItems] = useState(getLocalData());
+
   const [editId, setEditId] = useState(null);
   const [editName, setEditName] = useState("");
+
+  // ✅ save automatically whenever items change
+  useEffect(() => {
+    localStorage.setItem("groceries", JSON.stringify(items));
+  }, [items]);
+
+  // =========================
+  // CRUD FUNCTIONS
+  // =========================
 
   // ADD
   const addItem = (name) => {
@@ -43,7 +62,7 @@ const App = () => {
     setEditName(item.name);
   };
 
-  // UPDATE NAME
+  // UPDATE
   const updateItem = (name) => {
     setItems(
       items.map((item) => (item.id === editId ? { ...item, name } : item)),
@@ -55,7 +74,7 @@ const App = () => {
 
   return (
     <section className="section-center">
-      <h2 className="title"> Grocery List</h2>
+      <h2 className="title">Grocery List</h2>
 
       <Form
         addItem={addItem}
