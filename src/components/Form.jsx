@@ -1,19 +1,18 @@
-import { useState } from "react";
 import "./Form.css";
 
-const Form = ({ addItem }) => {
-  const [name, setName] = useState("");
-
+const Form = ({ addItem, updateItem, editId, editName, setEditName }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name.trim()) {
-      alert("Please enter an item name ⚠️");
-      return;
+    if (!editName.trim()) return;
+
+    if (editId) {
+      updateItem(editName);
+    } else {
+      addItem(editName);
     }
 
-    addItem(name);
-    setName(""); // clear input
+    setEditName("");
   };
 
   return (
@@ -21,12 +20,12 @@ const Form = ({ addItem }) => {
       <input
         type="text"
         placeholder="Enter grocery item..."
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        value={editName}
+        onChange={(e) => setEditName(e.target.value)}
       />
 
       <button type="submit" className="btn">
-        Add
+        {editId ? "Update" : "Add"}
       </button>
     </form>
   );

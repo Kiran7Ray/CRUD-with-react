@@ -1,12 +1,18 @@
-.section-center {
-  margin: 0 auto;
-  margin-top: 8rem;
-  max-width: 30rem;
-  background: #fff;
-  border-radius: 0.25rem;
-  padding: 2rem;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f4f6f8;
 }
+
 .section-center {
   max-width: 500px;
   margin: 40px auto;
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
 }
